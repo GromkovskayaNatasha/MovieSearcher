@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Movie_Searcher"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" WindowStartupLocation="CenterScreen">
+        Title="Movie Searcher" Height="480" Width="800" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label x:Name="label" Content="Type movie title to search for" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="178,13,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="195"/>
+        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="398" Margin="10,41,0,0" VerticalAlignment="Top" Width="200"/>
+        <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="398" Margin="582,41,0,0" VerticalAlignment="Top" Width="200"/>
+        <Button x:Name="button" Content="Search!" HorizontalAlignment="Left" Margin="378,13,0,0" VerticalAlignment="Top" Width="77" Height="23"/>
+
     </Grid>
 </Window>
