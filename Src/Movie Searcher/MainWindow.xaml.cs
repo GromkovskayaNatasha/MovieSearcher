@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Movie_Searcher.Model;
 using RestSharp;
@@ -9,15 +12,17 @@ namespace Movie_Searcher
     public partial class MainWindow
     {
         private readonly RestClient _client = new RestClient(@"http://www.omdbapi.com");
-        private RestRequestAsyncHandle _currentMovieRequestHandle;
+        private readonly Database _db = new Database();
         private readonly object _locker = new object();
+        private RestRequestAsyncHandle _currentMovieRequestHandle;
 
         public MainWindow()
         {
             InitializeComponent();
+            _db.Load();
         }
 
-        private void searchButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void searchButton_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(searchTextBox.Text))
             {
@@ -42,9 +47,9 @@ namespace Movie_Searcher
             }
         }
 
-        private void searchListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void searchListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var summary = (MovieSummary)searchListBox.Items[searchListBox.SelectedIndex];
+            var summary = (MovieSummary) searchListBox.Items[searchListBox.SelectedIndex];
 
             lock (_locker)
             {
@@ -73,9 +78,8 @@ namespace Movie_Searcher
             });
         }
 
-        private void favButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void favButton_Click(object sender, RoutedEventArgs e)
         {
-
         }
 
         private void PopulateSearchResults(IEnumerable<MovieSummary> summaries)
@@ -90,6 +94,11 @@ namespace Movie_Searcher
             }
         }
 
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            _db.Save();
+        }
+
         private void PopulateMovie(Movie movie)
         {
             titleTextBlock.Text = movie.Title;
@@ -98,7 +107,7 @@ namespace Movie_Searcher
             plotTextBlock.Text = movie.Plot;
             runtimeTextBlock.Text = movie.Runtime;
 
-            BitmapImage bitmap = new BitmapImage();
+            var bitmap = new BitmapImage();
             bitmap.BeginInit();
             bitmap.UriSource = new Uri(movie.Poster, UriKind.Absolute);
             bitmap.EndInit();

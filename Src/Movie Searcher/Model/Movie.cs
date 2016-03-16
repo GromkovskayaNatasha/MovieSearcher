@@ -11,6 +11,7 @@ namespace Movie_Searcher.Model
         public string Country { get; set; }
         public string Poster { get; set; }
         public string Id { get; set; }
+
         [DeserializeAs(Name = "Response")]
         public bool Success { get; set; }
     }
