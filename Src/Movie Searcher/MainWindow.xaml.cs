@@ -82,6 +82,11 @@ namespace Movie_Searcher
         {
         }
 
+        private void favListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
         private void PopulateSearchResults(IEnumerable<MovieSummary> summaries)
         {
             searchListBox.Items.Clear();
@@ -90,6 +95,18 @@ namespace Movie_Searcher
                 foreach (var summary in summaries)
                 {
                     searchListBox.Items.Add(summary);
+                }
+            }
+        }
+
+        private void PopulateFavourites(IEnumerable<Movie> movies)
+        {
+            favListBox.Items.Clear();
+            if (movies != null)
+            {
+                foreach (var movie in movies)
+                {
+                    searchListBox.Items.Add(movie);
                 }
             }
         }

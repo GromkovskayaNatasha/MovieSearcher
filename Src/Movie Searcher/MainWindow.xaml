@@ -16,7 +16,7 @@
                  VerticalAlignment="Top" Width="147" />
         <ListBox x:Name="searchListBox" Margin="10,69,0,10" SelectionChanged="searchListBox_SelectionChanged"
                  HorizontalAlignment="Left" Width="200" />
-        <ListBox x:Name="favListBox1" Margin="0,12,10,10" HorizontalAlignment="Right" Width="200" />
+        <ListBox x:Name="favListBox" Margin="0,12,10,10" HorizontalAlignment="Right" Width="200" SelectionChanged="favListBox_SelectionChanged" />
         <Button x:Name="searchButton" Content="Search" HorizontalAlignment="Left" Margin="162,41,0,0"
                 VerticalAlignment="Top" Width="48" Height="23" Click="searchButton_Click" />
         <Image x:Name="posterImage" HorizontalAlignment="Left" Height="429" Margin="215,10,0,0" VerticalAlignment="Top"
