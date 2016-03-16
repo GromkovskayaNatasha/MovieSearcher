@@ -10,9 +10,16 @@ namespace Movie_Searcher.Model
         public string Plot { get; set; }
         public string Country { get; set; }
         public string Poster { get; set; }
+
+        [DeserializeAs(Name = "imdbID")]
         public string Id { get; set; }
 
         [DeserializeAs(Name = "Response")]
         public bool Success { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("{0}, {1}", Title, Year);
+        }
     }
 }

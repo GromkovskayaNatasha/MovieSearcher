@@ -76,7 +76,7 @@ namespace Movie_Searcher
 
         public void Save()
         {
-            _dataSet.WriteXml(DbName);
+            if (_dataTable.Rows.Count > 0) _dataSet.WriteXml(DbName);
         }
     }
 }
