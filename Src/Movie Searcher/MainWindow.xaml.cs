@@ -73,6 +73,11 @@ namespace Movie_Searcher
             });
         }
 
+        private void favButton_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
+        }
+
         private void PopulateSearchResults(IEnumerable<MovieSummary> summaries)
         {
             searchListBox.Items.Clear();
@@ -87,11 +92,11 @@ namespace Movie_Searcher
 
         private void PopulateMovie(Movie movie)
         {
-            titleLabel.Content = movie.Title;
-            yearLabel.Content = movie.Year;
-            countryLabel.Content = movie.Country;
-            plotLabel.Content = movie.Plot;
-            runtimeLabel.Content = movie.Runtime;
+            titleTextBlock.Text = movie.Title;
+            yearTextBlock.Text = movie.Year;
+            countryTextBlock.Text = movie.Country;
+            plotTextBlock.Text = movie.Plot;
+            runtimeTextBlock.Text = movie.Runtime;
 
             BitmapImage bitmap = new BitmapImage();
             bitmap.BeginInit();

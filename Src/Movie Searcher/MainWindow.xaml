@@ -12,20 +12,19 @@
         </Grid.ColumnDefinitions>
         <Label x:Name="label" Content="Type movie title to search for" HorizontalAlignment="Left" Margin="10,10,0,0"
                VerticalAlignment="Top" />
-        <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Height="23" Margin="178,13,0,0" TextWrapping="Wrap"
-                 VerticalAlignment="Top" Width="195" />
-        <ListBox x:Name="searchListBox" HorizontalAlignment="Left" Height="398" Margin="10,41,0,0" VerticalAlignment="Top"
-                 Width="200" SelectionChanged="searchListBox_SelectionChanged" />
-        <ListBox x:Name="favListBox1" HorizontalAlignment="Left" Height="398" Margin="782,41,0,0" VerticalAlignment="Top"
-                 Width="200" />
-        <Button x:Name="searchButton" Content="Search!" HorizontalAlignment="Left" Margin="378,13,0,0"
-                VerticalAlignment="Top" Width="77" Height="23" Click="searchButton_Click" />
-        <Image x:Name="posterImage" HorizontalAlignment="Left" Height="398" Margin="215,41,0,0" VerticalAlignment="Top" Width="240"/>
-        <Label x:Name="titleLabel" Content="Label" HorizontalAlignment="Left" Margin="460,41,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="yearLabel" Content="Label" HorizontalAlignment="Left" Margin="460,88,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="runtimeLabel" Content="Label" HorizontalAlignment="Left" Margin="460,131,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="plotLabel" Content="Label" HorizontalAlignment="Left" Margin="460,176,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="countryLabel" Content="Label" HorizontalAlignment="Left" Margin="460,220,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="searchTextBox" HorizontalAlignment="Left" Height="23" Margin="10,41,0,0" TextWrapping="Wrap"
+                 VerticalAlignment="Top" Width="147" />
+        <ListBox x:Name="searchListBox" Margin="10,69,0,10" SelectionChanged="searchListBox_SelectionChanged" HorizontalAlignment="Left" Width="200" />
+        <ListBox x:Name="favListBox1" Margin="0,12,10,10" HorizontalAlignment="Right" Width="200" />
+        <Button x:Name="searchButton" Content="Search" HorizontalAlignment="Left" Margin="162,41,0,0"
+                VerticalAlignment="Top" Width="48" Height="23" Click="searchButton_Click" />
+        <Image x:Name="posterImage" HorizontalAlignment="Left" Height="429" Margin="215,10,0,0" VerticalAlignment="Top" Width="240"/>
+        <TextBlock x:Name="plotTextBlock" Margin="460,171,220,10" TextWrapping="Wrap" Text="TextBlock" FontSize="13.333"/>
+        <TextBlock x:Name="yearTextBlock" HorizontalAlignment="Left" Margin="460,78,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="16"/>
+        <TextBlock x:Name="runtimeTextBlock" HorizontalAlignment="Left" Margin="460,99,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="16"/>
+        <TextBlock x:Name="countryTextBlock" HorizontalAlignment="Left" Margin="460,120,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="16"/>
+        <TextBlock x:Name="titleTextBlock" HorizontalAlignment="Left" Margin="460,12,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" FontSize="18.667" Width="312" Height="61"/>
+        <Button x:Name="favButton" Content="Add to Favaourites" HorizontalAlignment="Left" Margin="460,146,0,0" VerticalAlignment="Top" Width="160" Click="favButton_Click"/>
 
     </Grid>
 </Window>
