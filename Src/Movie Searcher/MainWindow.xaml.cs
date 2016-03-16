@@ -1,5 +1,4 @@
-﻿
-namespace Movie_Searcher
+﻿namespace Movie_Searcher
 {
     public partial class MainWindow
     {
