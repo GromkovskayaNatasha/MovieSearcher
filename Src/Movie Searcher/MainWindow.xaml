@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Movie_Searcher"
         mc:Ignorable="d"
-        Title="Movie Searcher" Height="480" Width="800" WindowStartupLocation="CenterScreen">
+        Title="Movie Searcher" Height="480" Width="1000" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -14,12 +14,18 @@
                VerticalAlignment="Top" />
         <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="178,13,0,0" TextWrapping="Wrap"
                  VerticalAlignment="Top" Width="195" />
-        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="398" Margin="10,41,0,0" VerticalAlignment="Top"
+        <ListBox x:Name="searchListBox" HorizontalAlignment="Left" Height="398" Margin="10,41,0,0" VerticalAlignment="Top"
+                 Width="200" SelectionChanged="searchListBox_SelectionChanged" />
+        <ListBox x:Name="favListBox1" HorizontalAlignment="Left" Height="398" Margin="782,41,0,0" VerticalAlignment="Top"
                  Width="200" />
-        <ListBox x:Name="listBox1" HorizontalAlignment="Left" Height="398" Margin="582,41,0,0" VerticalAlignment="Top"
-                 Width="200" />
-        <Button x:Name="button" Content="Search!" HorizontalAlignment="Left" Margin="378,13,0,0"
-                VerticalAlignment="Top" Width="77" Height="23" />
+        <Button x:Name="searchButton" Content="Search!" HorizontalAlignment="Left" Margin="378,13,0,0"
+                VerticalAlignment="Top" Width="77" Height="23" Click="searchButton_Click" />
+        <Image x:Name="posterImage" HorizontalAlignment="Left" Height="398" Margin="215,41,0,0" VerticalAlignment="Top" Width="240"/>
+        <Label x:Name="titleLabel" Content="Label" HorizontalAlignment="Left" Margin="460,41,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="yearLabel" Content="Label" HorizontalAlignment="Left" Margin="460,88,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="runtimeLabel" Content="Label" HorizontalAlignment="Left" Margin="460,131,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="plotLabel" Content="Label" HorizontalAlignment="Left" Margin="460,176,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="countryLabel" Content="Label" HorizontalAlignment="Left" Margin="460,220,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

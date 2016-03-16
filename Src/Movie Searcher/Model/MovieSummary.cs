@@ -1,6 +1,6 @@
 ﻿namespace Movie_Searcher.Model
 {
-    internal class SearchResult
+    public class MovieSummary
     {
         public string Title { get; set; }
         public string Year { get; set; }
