@@ -47,11 +47,17 @@ namespace Movie_Searcher
         {
             using (var command = new SQLiteCommand(_connection))
             {
-                command.CommandText = string.Format(@"INSERT INTO favourites
+                command.CommandText = @"INSERT INTO favourites
                 (title, year, runtime, plot, country, poster, id)
-                VALUES (""{0}"", ""{1}"", ""{2}"", ""{3}"", ""{4}"", ""{5}"", ""{6}"" );", movie.Title, movie.Year,
-                    movie.Runtime, movie.Plot, movie.Country, movie.Poster, movie.Id);
+                VALUES (@p1, @p2, @p3, @p4, @p5, @p6, @p7);";
                 command.CommandType = CommandType.Text;
+                command.Parameters.Add(new SQLiteParameter("@p1", movie.Title));
+                command.Parameters.Add(new SQLiteParameter("@p2", movie.Year));
+                command.Parameters.Add(new SQLiteParameter("@p3", movie.Runtime));
+                command.Parameters.Add(new SQLiteParameter("@p4", movie.Plot));
+                command.Parameters.Add(new SQLiteParameter("@p5", movie.Country));
+                command.Parameters.Add(new SQLiteParameter("@p6", movie.Poster));
+                command.Parameters.Add(new SQLiteParameter("@p7", movie.Id));
                 command.ExecuteNonQuery();
             }
         }
@@ -60,19 +66,21 @@ namespace Movie_Searcher
         {
             using (var command = new SQLiteCommand(_connection))
             {
-                command.CommandText = string.Format(@"DELETE FROM favourites WHERE id = ""{0}"";", id);
+                command.CommandText = @"DELETE FROM favourites WHERE id = @p1;";
                 command.CommandType = CommandType.Text;
+                command.Parameters.Add(new SQLiteParameter("@p1", id));
                 command.ExecuteNonQuery();
             }
         }
 
         public bool MovieExists(string id)
         {
-            var exists = false;
+            bool exists;
             using (var command = new SQLiteCommand(_connection))
             {
-                command.CommandText = string.Format(@"SELECT id FROM favourites WHERE id = ""{0}"";", id);
+                command.CommandText = @"SELECT id FROM favourites WHERE id = @p1;";
                 command.CommandType = CommandType.Text;
+                command.Parameters.Add(new SQLiteParameter("@p1", id));
                 var reader = command.ExecuteReader();
                 exists = reader.Read();
             }

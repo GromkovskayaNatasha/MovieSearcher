@@ -14,6 +14,8 @@ namespace Movie_Searcher
     {
         private readonly RestClient _client = new RestClient(@"http://www.omdbapi.com");
         private readonly Database _db = new Database();
+        private readonly object _locker1 = new object();
+        private readonly object _locker2 = new object();
         private Movie[] _currentFavourites;
         private Movie _currentMovie;
         private RestRequestAsyncHandle _currentMovieRequestHandle;
@@ -82,33 +84,48 @@ namespace Movie_Searcher
         {
             if (searchListBox.SelectedIndex == -1)
             {
-                _currentMovie = null;
-                PopulateMovie(null);
+                lock (_locker2)
+                {
+                    _currentMovie = null;
+                    PopulateMovie(null);
+                }
             }
             else
             {
                 var summary = (MovieSummary) searchListBox.Items[searchListBox.SelectedIndex];
 
-                if (_currentMovieRequestHandle != null)
+                lock (_locker1)
                 {
-                    _currentMovieRequestHandle.Abort();
-                    _currentMovieRequestHandle = null;
+                    if (_currentMovieRequestHandle != null)
+                    {
+                        _currentMovieRequestHandle.Abort();
+                        _currentMovieRequestHandle = null;
+                    }
                 }
 
                 var request = new RestRequest("?i={id}&r=json", Method.GET);
                 request.AddUrlSegment("id", summary.Id);
-                _client.ExecuteAsync<Movie>(request, response =>
+                lock (_locker1)
                 {
-                    Dispatcher.Invoke(() =>
+                    _currentMovieRequestHandle = _client.ExecuteAsync<Movie>(request, response =>
                     {
-                        _currentMovieRequestHandle = null;
-                        if (response.Data != null && response.Data.Success)
+                        Dispatcher.Invoke(() =>
                         {
-                            PopulateMovie(response.Data);
-                            _currentMovie = response.Data;
-                        }
+                            lock (_locker1)
+                            {
+                                _currentMovieRequestHandle = null;
+                            }
+                            if (response.Data != null && response.Data.Success)
+                            {
+                                lock (_locker2)
+                                {
+                                    PopulateMovie(response.Data);
+                                    _currentMovie = response.Data;
+                                }
+                            }
+                        });
                     });
-                });
+                }
             }
         }
 
@@ -124,15 +141,18 @@ namespace Movie_Searcher
 
         private void ShowMovieFromFavList()
         {
-            if (favListBox.SelectedIndex == -1)
+            lock (_locker2)
             {
-                _currentMovie = null;
+                if (favListBox.SelectedIndex == -1)
+                {
+                    _currentMovie = null;
+                }
+                else
+                {
+                    _currentMovie = _currentFavourites[favListBox.SelectedIndex];
+                }
+                PopulateMovie(_currentMovie);
             }
-            else
-            {
-                _currentMovie = _currentFavourites[favListBox.SelectedIndex];
-            }
-            PopulateMovie(_currentMovie);
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
