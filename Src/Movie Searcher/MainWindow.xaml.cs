@@ -137,7 +137,7 @@ namespace Movie_Searcher
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            _db.Save();
+            _db.Dispose();
         }
 
         private void PopulateSearchResults(IEnumerable<MovieSummary> summaries)
