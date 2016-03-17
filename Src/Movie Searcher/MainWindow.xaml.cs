@@ -200,10 +200,10 @@ namespace Movie_Searcher
             {
                 favButton.Visibility = Visibility.Visible;
                 titleTextBlock.Text = movie.Title;
-                yearTextBlock.Text = movie.Year;
-                countryTextBlock.Text = movie.Country;
+                yearTextBlock.Text = "Year: " + movie.Year;
+                countryTextBlock.Text = "Country: " + movie.Country;
                 plotTextBlock.Text = movie.Plot;
-                runtimeTextBlock.Text = movie.Runtime;
+                runtimeTextBlock.Text = "Duration: " + movie.Runtime;
 
                 if (_db.MovieExists(movie.Id))
                 {
