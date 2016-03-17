@@ -24,21 +24,23 @@ namespace Movie_Searcher
             {
                 command.CommandText = @"SELECT * FROM favourites;";
                 command.CommandType = CommandType.Text;
-                var reader = command.ExecuteReader();
-                while (reader.Read())
+                using (var reader = command.ExecuteReader())
                 {
-                    yield return
-                        new Movie
-                        {
-                            Title = reader["title"].ToString(),
-                            Id = reader["id"].ToString(),
-                            Year = reader["year"].ToString(),
-                            Success = true,
-                            Country = reader["country"].ToString(),
-                            Runtime = reader["runtime"].ToString(),
-                            Plot = reader["plot"].ToString(),
-                            Poster = reader["poster"].ToString()
-                        };
+                    while (reader.Read())
+                    {
+                        yield return
+                            new Movie
+                            {
+                                Title = reader["title"].ToString(),
+                                Id = reader["id"].ToString(),
+                                Year = reader["year"].ToString(),
+                                Success = true,
+                                Country = reader["country"].ToString(),
+                                Runtime = reader["runtime"].ToString(),
+                                Plot = reader["plot"].ToString(),
+                                Poster = reader["poster"].ToString()
+                            };
+                    }
                 }
             }
         }
@@ -81,8 +83,10 @@ namespace Movie_Searcher
                 command.CommandText = @"SELECT id FROM favourites WHERE id = @p1;";
                 command.CommandType = CommandType.Text;
                 command.Parameters.Add(new SQLiteParameter("@p1", id));
-                var reader = command.ExecuteReader();
-                exists = reader.Read();
+                using (var reader = command.ExecuteReader())
+                {
+                    exists = reader.Read();
+                }
             }
 
             return exists;
@@ -127,6 +131,7 @@ namespace Movie_Searcher
         {
             if (disposing)
             {
+                _connection.Close();
                 _connection.Dispose();
             }
         }
