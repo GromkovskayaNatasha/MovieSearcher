@@ -6,19 +6,16 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Movie_Searcher.Model;
-using RestSharp;
 
 namespace Movie_Searcher
 {
     public partial class MainWindow
     {
-        private readonly RestClient _client = new RestClient(@"http://www.omdbapi.com");
+        private readonly Api _api = new Api();
         private readonly Database _db = new Database();
-        private readonly object _locker1 = new object();
-        private readonly object _locker2 = new object();
+        private readonly object _locker = new object();
         private Movie[] _currentFavourites;
         private Movie _currentMovie;
-        private RestRequestAsyncHandle _currentMovieRequestHandle;
 
         public MainWindow()
         {
@@ -34,21 +31,12 @@ namespace Movie_Searcher
             if (!string.IsNullOrWhiteSpace(searchTextBox.Text))
             {
                 searchButton.IsEnabled = false;
-                var request = new RestRequest("?s={title}&r=json", Method.GET);
-                request.AddUrlSegment("title", searchTextBox.Text);
-                _client.ExecuteAsync<SearchResults>(request, response =>
+                _api.Search(searchTextBox.Text, summaries =>
                 {
                     Dispatcher.Invoke(() =>
                     {
                         searchButton.IsEnabled = true;
-                        if (response.Data != null && response.Data.Success)
-                        {
-                            PopulateSearchResults(response.Data.Movies);
-                        }
-                        else
-                        {
-                            PopulateSearchResults(null);
-                        }
+                        PopulateSearchResults(summaries);
                     });
                 });
             }
@@ -84,7 +72,7 @@ namespace Movie_Searcher
         {
             if (searchListBox.SelectedIndex == -1)
             {
-                lock (_locker2)
+                lock (_locker)
                 {
                     _currentMovie = null;
                     PopulateMovie(null);
@@ -93,39 +81,17 @@ namespace Movie_Searcher
             else
             {
                 var summary = (MovieSummary) searchListBox.Items[searchListBox.SelectedIndex];
-
-                lock (_locker1)
+                _api.GetMovieInfo(summary.Id, movie =>
                 {
-                    if (_currentMovieRequestHandle != null)
+                    Dispatcher.Invoke(() =>
                     {
-                        _currentMovieRequestHandle.Abort();
-                        _currentMovieRequestHandle = null;
-                    }
-                }
-
-                var request = new RestRequest("?i={id}&r=json", Method.GET);
-                request.AddUrlSegment("id", summary.Id);
-                lock (_locker1)
-                {
-                    _currentMovieRequestHandle = _client.ExecuteAsync<Movie>(request, response =>
-                    {
-                        Dispatcher.Invoke(() =>
+                        lock (_locker)
                         {
-                            lock (_locker1)
-                            {
-                                _currentMovieRequestHandle = null;
-                            }
-                            if (response.Data != null && response.Data.Success)
-                            {
-                                lock (_locker2)
-                                {
-                                    PopulateMovie(response.Data);
-                                    _currentMovie = response.Data;
-                                }
-                            }
-                        });
+                            _currentMovie = movie;
+                            PopulateMovie(_currentMovie);
+                        }
                     });
-                }
+                });
             }
         }
 
@@ -141,7 +107,7 @@ namespace Movie_Searcher
 
         private void ShowMovieFromFavList()
         {
-            lock (_locker2)
+            lock (_locker)
             {
                 if (favListBox.SelectedIndex == -1)
                 {
