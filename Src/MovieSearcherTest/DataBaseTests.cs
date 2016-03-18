@@ -17,6 +17,7 @@ namespace MovieSearcherTest
             db.Load();
             db.Dispose();
             Assert.IsTrue(File.Exists("database.db"));
+            File.Delete("database.db");
         }
 
         [TestMethod]
@@ -52,6 +53,7 @@ namespace MovieSearcherTest
             Assert.AreEqual(favs[0].Runtime, m.Runtime);
             Assert.AreEqual(favs[0].Success, m.Success);
             Assert.AreEqual(favs[0].Year, m.Year);
+            File.Delete("database.db");
         }
 
         [TestMethod]
@@ -84,6 +86,7 @@ namespace MovieSearcherTest
             var favs = db3.GetAllFavourites().ToArray();
             db3.Dispose();
             Assert.AreEqual(favs.Length, 0);
+            File.Delete("database.db");
         }
 
         [TestMethod]
@@ -111,6 +114,7 @@ namespace MovieSearcherTest
             Assert.IsTrue(db2.MovieExists(m.Id));
             Assert.IsFalse(db2.MovieExists("some non-existing id"));
             db2.Dispose();
+            File.Delete("database.db");
         }
     }
 }
