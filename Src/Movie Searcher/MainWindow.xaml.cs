@@ -14,15 +14,15 @@ namespace Movie_Searcher
         private readonly Api _api = new Api();
         private readonly Database _db = new Database();
         private readonly object _locker = new object();
-        private Movie[] _currentFavourites;
+        private Movie[] _currentFavorites;
         private Movie _currentMovie;
 
         public MainWindow()
         {
             InitializeComponent();
             _db.Load();
-            _currentFavourites = _db.GetAllFavourites().ToArray();
-            PopulateFavourites(_currentFavourites);
+            _currentFavorites = _db.GetAllFavorites().ToArray();
+            PopulateFavorites(_currentFavorites);
             PopulateMovie(null);
         }
 
@@ -44,18 +44,18 @@ namespace Movie_Searcher
 
         private void favButton_Click(object sender, RoutedEventArgs e)
         {
-            if (favButton.Content.ToString() == "Remove from Favaourites")
+            if (favButton.Content.ToString() == "Remove from Favorites")
             {
-                _db.RemoveFromFavourites(_currentMovie.Id);
-                favButton.Content = "Add to Favaourites";
+                _db.RemoveFromFavorites(_currentMovie.Id);
+                favButton.Content = "Add to Favorites";
             }
             else
             {
-                _db.AddToFavourites(_currentMovie);
-                favButton.Content = "Remove from Favaourites";
+                _db.AddToFavorites(_currentMovie);
+                favButton.Content = "Remove from Favorites";
             }
-            _currentFavourites = _db.GetAllFavourites().ToArray();
-            PopulateFavourites(_currentFavourites);
+            _currentFavorites = _db.GetAllFavorites().ToArray();
+            PopulateFavorites(_currentFavorites);
         }
 
         private void searchListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -115,7 +115,7 @@ namespace Movie_Searcher
                 }
                 else
                 {
-                    _currentMovie = _currentFavourites[favListBox.SelectedIndex];
+                    _currentMovie = _currentFavorites[favListBox.SelectedIndex];
                 }
                 PopulateMovie(_currentMovie);
             }
@@ -138,7 +138,7 @@ namespace Movie_Searcher
             }
         }
 
-        private void PopulateFavourites(IEnumerable<Movie> movies)
+        private void PopulateFavorites(IEnumerable<Movie> movies)
         {
             favListBox.Items.Clear();
             if (movies != null)

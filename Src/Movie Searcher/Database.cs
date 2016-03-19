@@ -18,7 +18,7 @@ namespace Movie_Searcher
             GC.SuppressFinalize(this);
         }
 
-        public IEnumerable<Movie> GetAllFavourites()
+        public IEnumerable<Movie> GetAllFavorites()
         {
             using (var command = new SQLiteCommand(_connection))
             {
@@ -45,7 +45,7 @@ namespace Movie_Searcher
             }
         }
 
-        public void AddToFavourites(Movie movie)
+        public void AddToFavorites(Movie movie)
         {
             using (var command = new SQLiteCommand(_connection))
             {
@@ -64,7 +64,7 @@ namespace Movie_Searcher
             }
         }
 
-        public void RemoveFromFavourites(string id)
+        public void RemoveFromFavorites(string id)
         {
             using (var command = new SQLiteCommand(_connection))
             {

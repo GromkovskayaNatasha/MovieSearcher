@@ -37,12 +37,12 @@ namespace MovieSearcherTest
                 Title = "title1",
                 Year = "1990"
             };
-            db.AddToFavourites(m);
+            db.AddToFavorites(m);
             db.Dispose();
 
             var db2 = new Database();
             db2.Load();
-            var favs = db2.GetAllFavourites().ToArray();
+            var favs = db2.GetAllFavorites().ToArray();
             db2.Dispose();
             Assert.AreEqual(favs.Length, 1);
             Assert.AreEqual(favs[0].Title, m.Title);
@@ -73,17 +73,17 @@ namespace MovieSearcherTest
                 Title = "title1",
                 Year = "1990"
             };
-            db.AddToFavourites(m);
+            db.AddToFavorites(m);
             db.Dispose();
 
             var db2 = new Database();
             db2.Load();
-            db2.RemoveFromFavourites(m.Id);
+            db2.RemoveFromFavorites(m.Id);
             db2.Dispose();
 
             var db3 = new Database();
             db3.Load();
-            var favs = db3.GetAllFavourites().ToArray();
+            var favs = db3.GetAllFavorites().ToArray();
             db3.Dispose();
             Assert.AreEqual(favs.Length, 0);
             File.Delete("database.db");
@@ -106,7 +106,7 @@ namespace MovieSearcherTest
                 Title = "title1",
                 Year = "1990"
             };
-            db.AddToFavourites(m);
+            db.AddToFavorites(m);
             db.Dispose();
 
             var db2 = new Database();
