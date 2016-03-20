@@ -1,5 +1,7 @@
 # MovieSearcher
-A program to search movies
+A program to search movies.
+
+### [Explanatory Note]
 
 ### Tech
 
@@ -16,3 +18,4 @@ Open solution in Visual Studio, build both main and test projects, copy `SQLite.
 [OMDb API]: <http://www.omdbapi.com/>
 [System.Data.SQLite]: <https://system.data.sqlite.org/index.html/doc/trunk/www/index.wiki>
 [RestSharp]: <http://restsharp.org/>
+[Explanatory Note]: <https://github.com/GromkovskayaNatasha/MovieSearcher/raw/master/Explanatory_Note.pdf>
