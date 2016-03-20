@@ -16,6 +16,8 @@ namespace Movie_Searcher
         private readonly object _locker = new object();
         private Movie[] _currentFavorites;
         private Movie _currentMovie;
+        private const string AddToFavText = "Add to Favorites";
+        private const string RemoveFromFavText = "Remove from Favorites";
 
         public MainWindow()
         {
@@ -44,15 +46,15 @@ namespace Movie_Searcher
 
         private void favButton_Click(object sender, RoutedEventArgs e)
         {
-            if (favButton.Content.ToString() == "Remove from Favorites")
+            if (favButton.Content.ToString() == RemoveFromFavText)
             {
                 _db.RemoveFromFavorites(_currentMovie.Id);
-                favButton.Content = "Add to Favorites";
+                favButton.Content = AddToFavText;
             }
             else
             {
                 _db.AddToFavorites(_currentMovie);
-                favButton.Content = "Remove from Favorites";
+                favButton.Content = RemoveFromFavText;
             }
             _currentFavorites = _db.GetAllFavorites().ToArray();
             PopulateFavorites(_currentFavorites);
@@ -173,11 +175,11 @@ namespace Movie_Searcher
 
                 if (_db.MovieExists(movie.Id))
                 {
-                    favButton.Content = "Remove from Favaourites";
+                    favButton.Content = RemoveFromFavText;
                 }
                 else
                 {
-                    favButton.Content = "Add to Favaourites";
+                    favButton.Content = AddToFavText;
                 }
 
                 var bitmap = new BitmapImage();
